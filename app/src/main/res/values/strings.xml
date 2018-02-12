@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Movie Roulette</string>
+    <string name="app_title">Movie Roulette(Alpha v0.1.8)</string>
+
+    <string-array name="ratings_array">
+        <item> </item>
+        <item>NR</item>
+        <item>G</item>
+        <item>PG</item>
+        <item>PG-13</item>
+        <item>R</item>
+        <item>NC-17</item>
+    </string-array>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#36384C</color>
+    <color name="colorPrimaryDark">#323339</color>
+    <color name="colorAccent">#849974</color>
+    <color name="favorite_bg_default">#613A43</color>
+    <color name="favorite_icon_default">#F26968</color>
+    <color name="movie_tile_overlay">#73000000</color>
+    <color name="metascore_bg_unknown">#D9808080</color>
+    <color name="metascore_bg_green">#D966CC33</color>
+    <color name="metascore_bg_yellow">#D9FFCC33</color>
+    <color name="metascore_bg_red">#D9FF0000</color>
+</resources>

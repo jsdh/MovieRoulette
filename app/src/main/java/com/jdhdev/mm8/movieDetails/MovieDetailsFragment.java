@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
     @BindView(R.id.cast_list) RecyclerView castList;
     @BindView(R.id.image_list) RecyclerView imageList;
     @BindView(R.id.share_movie) ImageView share;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.app_bar_layout) AppBarLayout appBarLayout;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.title_transition_dummy) TextView titleDummy;
 
@@ -65,6 +69,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
     private CastListAdapter castListAdapter;
     private ImageListAdapter imageListAdapter;
     private Drawable favoriteIcon;
+    private double collapsedPercent = 0;
 
     public MovieDetailsFragment() {}
 
@@ -142,6 +147,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
             }
         });
 
+        appBarLayout.addOnOffsetChangedListener((layout, offset) -> {
+            int total = collapsingToolbarLayout.getHeight() - toolbar.getHeight();
+            collapsedPercent = Math.abs(offset) / (double) total;
+        });
+
         return root;
     }
 
@@ -184,6 +194,10 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
 
     public void onExit() {
         favorite.setVisibility(View.GONE);
+    }
+
+    public boolean showingBackdrop() {
+        return collapsedPercent < 0.8;
     }
 
 

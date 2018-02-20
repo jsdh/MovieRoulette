@@ -1,10 +1,11 @@
 package com.jdhdev.mm8.movieDetails;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Transition;
-import android.util.Log;
+import android.view.View;
 
 import com.jdhdev.mm8.MmApplication;
 import com.jdhdev.mm8.R;
@@ -12,6 +13,9 @@ import com.jdhdev.mm8.di.AppComponent;
 import com.jdhdev.mm8.util.TransitionAction;
 
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
 
 public class MovieDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE_ID = "MOVIE_ID";
@@ -60,6 +64,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        setEnterSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                if (!fragment.showingBackdrop()) {
+                    names.remove("backdrop");
+                    sharedElements.remove("backdrop");
+                }
+            }
+        });
         fragment.onExit();
         super.onBackPressed();
     }

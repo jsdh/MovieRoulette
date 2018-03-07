@@ -13,7 +13,7 @@ data class TheMovieDbConfig(
         @PrimaryKey
         var id: Int = 1,
         @ColumnInfo(name = "start_year")
-        var startYear: Int = 1850,
+        var startYear: Int = 1950,
         @ColumnInfo(name = "end_year")
         var endYear: Int = 2020,
         @ColumnInfo(name = "rating")
@@ -26,7 +26,7 @@ data class TheMovieDbConfig(
     companion object {
         @JvmStatic fun insertDefaults(db: SupportSQLiteDatabase) {
             val cv = ContentValues(1)
-            cv.put("start_year", 1850)
+            cv.put("start_year", 1950)
             cv.put("end_year", 2020)
             cv.put("rating", "ANY")
             cv.put("genres", "")

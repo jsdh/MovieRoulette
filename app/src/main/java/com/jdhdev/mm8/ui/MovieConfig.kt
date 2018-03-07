@@ -5,7 +5,6 @@ import android.os.Handler
 import android.support.annotation.AttrRes
 import android.support.annotation.StyleRes
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
@@ -26,14 +25,14 @@ import kotlinx.android.synthetic.main.movie_config_view.view.*
 
 class MovieConfig : LinearLayout {
     private var endYear         = 2050
-    private var startYear       = 1899
+    private var startYear       = 1950
     private var includeAdult    = false
     private var rating          = ESBRating.ANY
     private val selectedGenres  = HashSet<Genres>()
 
     private var notifyEnabled   = true
     private val uiMaping        = HashMap<Int, ToggleSwitch>()
-    private var currentState    = TmdbConfiguration(startYear, endYear, rating, selectedGenres, includeAdult)
+    private var savedState      = TmdbConfiguration(startYear, endYear, rating, selectedGenres, includeAdult)
     private var delayedNotification : Runnable? = null
     private var listener: ConfigChangeListener? = null
     private lateinit var uiHandler: Handler
@@ -76,13 +75,15 @@ class MovieConfig : LinearLayout {
     }
 
     fun bind(config: TmdbConfiguration) {
-        currentState  = config
+        savedState  = config
         notifyEnabled = false
 
+        startYear = config.startYear
+        endYear = config.endYear
         includeAdult = config.includeAdult
         toggle_adult.isChecked = !includeAdult
 
-        release_date_range.setRangePinsByValue(config.startYear.toFloat(), config.endYear.toFloat())
+        release_date_range.setRangePinsByValue(startYear.toFloat(), endYear.toFloat())
 
         resetGenreSwitches()
         selectedGenres.clear()
@@ -226,9 +227,9 @@ class MovieConfig : LinearLayout {
                 HashSet<Genres>(selectedGenres),
                 includeAdult)
 
-        if (notifyEnabled && config != currentState) {
-            currentState = config
-            listener?.onConfigChanged(currentState)
+        if (notifyEnabled && config != savedState) {
+            savedState = config
+            listener?.onConfigChanged(savedState)
         }
     }
 

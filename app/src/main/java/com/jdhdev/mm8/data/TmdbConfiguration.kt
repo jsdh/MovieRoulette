@@ -2,7 +2,7 @@ package com.jdhdev.mm8.data
 
 
 data class TmdbConfiguration(
-        val startYear: Int = 1850,
+        val startYear: Int = 1950,
         val endYear: Int = 2020,
         val rating: ESBRating = ESBRating.ANY,
         var genres: Set<Genres> = emptySet<Genres>(),
